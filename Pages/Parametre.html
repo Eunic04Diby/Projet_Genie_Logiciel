@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise à Jour des Paramètres</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">LOGO</div>
+        <div class="search-bar">
+            <input type="text" placeholder="RECHERCHER">
+        </div>
+        <div class="user-profile">NOM UTILISATEUR</div>
+    </header>
+
+    <nav class="sidebar">
+        <ul>
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="form-section">
+            <h2>Paramètres</h2>
+            <form id="settingsForm">
+                <div class="form-group">
+                    <label>IDENTIFIANT :</label>
+                    <input type="text" placeholder="E(X)">
+                </div>
+                <div class="form-group">
+                    <label>LIBELLÉ :</label>
+                    <input type="text" placeholder="E(X)">
+                </div>
+                <button type="submit">Mettre à jour</button>
+            </form>
+        </section>
+
+        <section class="table-section">
+            <div class="table-header">
+                <span>IDENTIFIANT</span>
+                <span>LIBELLÉ</span>
+                <span>ACTION</span>
+            </div>
+            <div class="table-body">
+                <!-- Les données seront ajoutées dynamiquement ici -->
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
