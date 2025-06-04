@@ -32,7 +32,7 @@ header {
 
 .search-bar input {
     padding: 0.8rem;
-    width: 300px;
+    width: 250px;
     border: 1px solid #ddd;
     border-radius: 4px;
     transition: border-color 0.3s;
@@ -80,9 +80,6 @@ header {
 main {
     margin-left: 200px;
     padding: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 2rem;
 }
 
 .form-section {
@@ -90,6 +87,7 @@ main {
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
     animation: slideIn 0.5s ease-out;
 }
 
@@ -98,20 +96,25 @@ main {
     color: var(--primary-green);
 }
 
-.form-group {
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.form-group input {
-    width: 100%;
+.form-group input, 
+.form-group select {
     padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 4px;
+    width: 100%;
 }
 
 button {
@@ -136,7 +139,7 @@ button:hover {
 
 .table-header {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
     padding: 1rem;
     background: #f8f8f8;
     font-weight: bold;
@@ -149,14 +152,15 @@ button:hover {
 
 .table-row {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
     padding: 1rem;
+    border-bottom: 1px solid #eee;
     animation: fadeIn 0.5s;
 }
 
 @keyframes slideIn {
-    from { transform: translateX(-20px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes fadeIn {

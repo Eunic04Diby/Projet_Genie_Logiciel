@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise à jour des ECUE</title>
+            <link rel="stylesheet" href="../css/maj_UE.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+    <header>
+        <div class="logo">LOGO</div>
+        <div class="search-bar">
+            <input type="text" placeholder="RECHERCHER">
+        </div>
+        <div class="user-profile">NOM UTILISATEUR</div>
+    </header>
+
+    <aside class="sidebar">
+        <ul>
+            <li class="active">
+                <span>📚</span>
+                <span>Gestion UE</span>
+            </li>
+            <li>
+                <span>👥</span>
+                <span>Étudiants</span>
+            </li>
+            <li>
+                <span>📋</span>
+                <span>Programmes</span>
+            </li>
+            <li>
+                <span>📊</span>
+                <span>Rapports</span>
+            </li>
+            <li>
+                <span>⚙️</span>
+                <span>Paramètres</span>
+            </li>
+        </ul>
+    </aside>
+
+    <main>
+        <h1 class="page-title">Mise à jour des ECUE</h1>
+
+        <div class="success-message" id="successMessage">
+            UE ajoutée avec succès !
+        </div>
+
+        <div class="form-container">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="anneeAcademique">Année Académique</label>
+                    <select id="anneeAcademique">
+                        <option value="">Sélectionner...</option>
+                        <option value="2023-2024">2023-2024</option>
+                        <option value="2024-2025">2024-2025</option>
+                        <option value="2025-2026">2025-2026</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="niveau">Niveau</label>
+                    <select id="niveau">
+                        <option value="">Sélectionner...</option>
+                        <option value="L1">Licence 1</option>
+                        <option value="L2">Licence 2</option>
+                        <option value="L3">Licence 3</option>
+                        <option value="M1">Master 1</option>
+                        <option value="M2">Master 2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="semestre">Semestre</label>
+                    <select id="semestre">
+                        <option value="">Sélectionner...</option>
+                        <option value="S1">Semestre 1</option>
+                        <option value="S2">Semestre 2</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="idUE">ID UE</label>
+                    <input type="text" id="idUE" placeholder="Ex: UE001">
+                </div>
+                <div class="form-group">
+                    <label for="libelle">Libellé</label>
+                    <input type="text" id="libelle" placeholder="Nom de l'UE">
+                </div>
+                <div class="form-group">
+                    <label for="credit">Crédit</label>
+                    <input type="number" id="credit" placeholder="Nombre de crédits" min="1" max="30">
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: end;">
+                <button class="validate-btn" onclick="ajouterUE()">Valider</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                Liste des UE
+            </div>
+            
+            <table class="data-table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Année</th>
+                        <th>Niveau</th>
+                        <th>Semestre</th>
+                        <th>ID UE</th>
+                        <th>Libellé</th>
+                        <th>Crédit</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td>2024-2025</td>
+                        <td>L1</td>
+                        <td>S1</td>
+                        <td>UE001</td>
+                        <td>Mathématiques Générales</td>
+                        <td>6</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-edit" onclick="modifierUE(this)">Modifier</button>
+                                <button class="btn-delete" onclick="supprimerUE(this)">Supprimer</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2024-2025</td>
+                        <td>L1</td>
+                        <td>S1</td>
+                        <td>UE002</td>
+                        <td>Algorithmique et Programmation</td>
+                        <td>4</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-edit" onclick="modifierUE(this)">Modifier</button>
+                                <button class="btn-delete" onclick="supprimerUE(this)">Supprimer</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2024-2025</td>
+                        <td>L1</td>
+                        <td>S2</td>
+                        <td>UE003</td>
+                        <td>Base de Données</td>
+                        <td>5</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-edit" onclick="modifierUE(this)">Modifier</button>
+                                <button class="btn-delete" onclick="supprimerUE(this)">Supprimer</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        let modeEdition = false;
+        let ligneEnEdition = null;
+
+        function ajouterUE() {
+            const anneeAcademique = document.getElementById('anneeAcademique').value;
+            const niveau = document.getElementById('niveau').value;
+            const semestre = document.getElementById('semestre').value;
+            const idUE = document.getElementById('idUE').value.trim();
+            const libelle = document.getElementById('libelle').value.trim();
+            const credit = document.getElementById('credit').value;
+
+            // Validation
+            if (!anneeAcademique || !niveau || !semestre || !idUE || !libelle || !credit) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+
+            if (credit < 1 || credit > 30) {
+                alert('Le nombre de crédits doit être entre 1 et 30');
+                return;
+            }
+
+            // Vérifier les doublons
+            const existingRows = document.querySelectorAll('#tableBody tr');
+            for (let row of existingRows) {
+                if (row.cells[3].textContent === idUE && row !== ligneEnEdition) {
+                    alert('Cet ID UE existe déjà');
+                    return;
+                }
+            }
+
+            const tableBody = document.getElementById('tableBody');
+            
+            if (modeEdition && ligneEnEdition) {
+                // Mode modification
+                ligneEnEdition.cells[0].textContent = anneeAcademique;
+                ligneEnEdition.cells[1].textContent = niveau;
+                ligneEnEdition.cells[2].textContent = semestre;
+                ligneEnEdition.cells[3].textContent = idUE;
+                ligneEnEdition.cells[4].textContent = libelle;
+                ligneEnEdition.cells[5].textContent = credit;
+                
+                modeEdition = false;
+                ligneEnEdition = null;
+                document.querySelector('.validate-btn').textContent = 'Valider';
+                document.querySelector('.validate-btn').style.background = 'var(--primary-green)';
+            } else {
+                // Mode ajout
+                const newRow = tableBody.insertRow();
+                newRow.innerHTML = `
+                    <td>${anneeAcademique}</td>
+                    <td>${niveau}</td>
+                    <td>${semestre}</td>
+                    <td>${idUE}</td>
+                    <td>${libelle}</td>
+                    <td>${credit}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-edit" onclick="modifierUE(this)">Modifier</button>
+                            <button class="btn-delete" onclick="supprimerUE(this)">Supprimer</button>
+                        </div>
+                    </td>
+                `;
+                
+                // Animation pour la nouvelle ligne
+                newRow.style.opacity = '0';
+                newRow.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    newRow.style.transition = 'all 0.3s ease';
+                    newRow.style.opacity = '1';
+                    newRow.style.transform = 'translateY(0)';
+                }, 100);
+                
+                showSuccessMessage();
+            }
+
+            // Réinitialiser le formulaire
+            resetForm();
+        }
+
+        function supprimerUE(button) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette UE ?')) {
+                const row = button.closest('tr');
+                row.style.transform = 'translateX(-100%)';
+                row.style.opacity = '0';
+                
+                setTimeout(() => {
+                    row.remove();
+                }, 300);
+            }
+        }
+
+        function modifierUE(button) {
+            const row = button.closest('tr');
+            const cells = row.cells;
+            
+            // Remplir le formulaire avec les valeurs actuelles
+            document.getElementById('anneeAcademique').value = cells[0].textContent;
+            document.getElementById('niveau').value = cells[1].textContent;
+            document.getElementById('semestre').value = cells[2].textContent;
+            document.getElementById('idUE').value = cells[3].textContent;
+            document.getElementById('libelle').value = cells[4].textContent;
+            document.getElementById('credit').value = cells[5].textContent;
+            
+            // Passer en mode édition
+            modeEdition = true;
+            ligneEnEdition = row;
+            
+            // Changer le bouton
+            const btnValidate = document.querySelector('.validate-btn');
+            btnValidate.textContent = 'Modifier';
+            btnValidate.style.background = '#3498db';
+            
+            // Scroll vers le formulaire
+            document.querySelector('.form-container').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('anneeAcademique').value = '';
+            document.getElementById('niveau').value = '';
+            document.getElementById('semestre').value = '';
+            document.getElementById('idUE').value = '';
+            document.getElementById('libelle').value = '';
+            document.getElementById('credit').value = '';
+        }
+
+        function showSuccessMessage() {
+            const message = document.getElementById('successMessage');
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 3000);
+        }
+
+        // Raccourcis clavier
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modeEdition) {
+                modeEdition = false;
+                ligneEnEdition = null;
+                resetForm();
+                document.querySelector('.validate-btn').textContent = 'Valider';
+                document.querySelector('.validate-btn').style.background = 'var(--primary-green)';
+            }
+        });
+
+        // Filtrage du tableau (optionnel)
+        function filtrerTableau() {
+            const searchValue = document.querySelector('.search-bar input').value.toLowerCase();
+            const rows = document.querySelectorAll('#tableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchValue) ? '' : 'none';
+            });
+        }
+
+        // Ajouter l'événement de recherche
+        document.querySelector('.search-bar input').addEventListener('input', filtrerTableau);
+    </script>
+</body>
+</html>

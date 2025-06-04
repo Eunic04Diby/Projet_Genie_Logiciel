@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise à jour des types utilisateurs</title>
+        <link rel="stylesheet" href="../css/niveau_approbation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+    <header>
+        <div class="logo">LOGO</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Rechercher...">
+        </div>
+        <div class="user-profile">NOM UTILISATEUR</div>
+    </header>
+
+    <aside class="sidebar">
+        <ul>
+            <li class="active">
+                <span>📋</span>
+                <span>Fonctions</span>
+            </li>
+            <li>
+                <span>👥</span>
+                <span>Utilisateurs</span>
+            </li>
+            <li>
+                <span>⚙️</span>
+                <span>Paramètres</span>
+            </li>
+            <li>
+                <span>📊</span>
+                <span>Rapports</span>
+            </li>
+        </ul>
+    </aside>
+
+    <main>
+        <h1 class="page-title">Mise à jour des types utilisateurs</h1>
+
+        <div class="success-message" id="successMessage">
+            Enregistrement ajouté avec succès !
+        </div>
+
+        <div class="form-container">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="identifiant">Identifiant</label>
+                    <input type="text" id="identifiant" placeholder="Saisir l'identifiant">
+                </div>
+                <div class="form-group">
+                    <label for="libelle">Libellé</label>
+                    <input type="text" id="libelle" placeholder="Saisir le libellé">
+                </div>
+                <button class="btn-add" onclick="ajouterEnregistrement()">Ajouter</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                Liste des enregistrements
+            </div>
+            
+            <table class="data-table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th class="numero-col">N°</th>
+                        <th>Identifiant</th>
+                        <th>Libellé</th>
+                        <th class="action-col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                  
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+<script src="../js/niveau_approbation.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Administrateur</title>
+             <link rel="stylesheet" href="../css/tableau_bord_admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <div class="logo">LOGO</div>
+        <div class="search-container">
+            <button class="search-btn">RECHERCHER</button>
+        </div>
+        <div class="user-profile">NOM UTILISATEUR</div>
+    </header>
+
+    <main>
+        <h1 class="page-title">Tableau de Bord Administrateur</h1>
+
+        <!-- Métriques principales -->
+        <div class="dashboard-grid">
+            <div class="metric-card">
+                <div class="metric-icon">👥</div>
+                <div class="metric-number" data-target="156">0</div>
+                <div class="metric-label">Étudiants inscrits</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">📄</div>
+                <div class="metric-number" data-target="89">0</div>
+                <div class="metric-label">Rapports déposés</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">✅</div>
+                <div class="metric-number" data-target="67">0</div>
+                <div class="metric-label">Rapports approuvés</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">📋</div>
+                <div class="metric-number" data-target="45">0</div>
+                <div class="metric-label">Rapports transmis à la commission</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🎯</div>
+                <div class="metric-number" data-target="38">0</div>
+                <div class="metric-label">Rapports validés</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">📅</div>
+                <div class="metric-number" data-target="23">0</div>
+                <div class="metric-label">Soutenances planifiées</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🎓</div>
+                <div class="metric-number" data-target="15">0</div>
+                <div class="metric-label">Soutenances réalisées</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">❌</div>
+                <div class="metric-number" data-target="7">0</div>
+                <div class="metric-label">Rapports rejetés ou en anomalie</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">✉️</div>
+                <div class="metric-number" data-target="12">0</div>
+                <div class="metric-label">Messages non lus / Réclamations</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">📂</div>
+                <div class="metric-number" data-target="9">0</div>
+                <div class="metric-label">Dossiers incomplets</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🏢</div>
+                <div class="metric-number" data-target="4">0</div>
+                <div class="metric-label">Étudiants sans entreprise</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">👨‍🏫</div>
+                <div class="metric-number" data-target="3">0</div>
+                <div class="metric-label">Encadreurs sans rapport</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">📊</div>
+                <div class="metric-number" data-target="28">0</div>
+                <div class="metric-label">Activité sur les 7 derniers jours</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚠️</div>
+                <div class="metric-number" data-target="5">0</div>
+                <div class="metric-label">Alertes critiques</div>
+            </div>
+        </div>
+
+        <!-- Section des graphiques -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3 class="chart-title">Évolution des dépôts de rapports</h3>
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3 class="chart-title">Répartition par spécialité</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Section historique des activités -->
+        <div class="activity-section">
+            <div class="activity-header">
+                <h3 class="activity-title">Historique des activités récentes</h3>
+                <button class="download-btn" title="Télécharger le rapport">⬇</button>
+            </div>
+            <div class="activity-content">
+                <div class="activity-item">
+                    <div class="activity-dot"></div>
+                    <div class="activity-line"></div>
+                    <span>Validation de 8 rapports de stage aujourd'hui</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot"></div>
+                    <div class="activity-line"></div>
+                    <span>Planification de 5 soutenances pour la semaine prochaine</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot"></div>
+                    <div class="activity-line"></div>
+                    <span>Mise à jour des critères d'évaluation</span>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-dot"></div>
+                    <div class="activity-line"></div>
+                    <span>Traitement de 4 réclamations étudiantes</span>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/tableau_bord_admin.js"></script>
+</body>
+</html>

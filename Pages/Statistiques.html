@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultation des Statistiques</title>
+         <link rel="stylesheet" href="../css/statistique.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+</head>
+<body>
+    <header>
+        <div class="logo">LOGO</div>
+        <div class="header-controls">
+            <select class="year-selector">
+                <option value="2024">Année 2024</option>
+                <option value="2023">Année 2023</option>
+                <option value="2022">Année 2022</option>
+            </select>
+            <select class="level-selector">
+                <option value="all">Niveau d'étude</option>
+                <option value="l1">Licence 1</option>
+                <option value="l2">Licence 2</option>
+                <option value="l3">Licence 3</option>
+                <option value="m1">Master 1</option>
+                <option value="m2">Master 2</option>
+            </select>
+            <button class="search-btn">RECHERCHER</button>
+        </div>
+        <div class="user-profile">NOM UTILISATEUR</div>
+    </header>
+
+    <nav class="sidebar">
+        <ul>
+            <li>
+                <span>🏠</span>
+                <span>Accueil</span>
+            </li>
+            <li>
+                <span>📋</span>
+                <span>Dépôt</span>
+            </li>
+            <li>
+                <span>📁</span>
+                <span>Dossiers</span>
+            </li>
+            <li>
+                <span>📅</span>
+                <span>Calendrier</span>
+            </li>
+            <li class="active">
+                <span>📊</span>
+                <span>Statistiques</span>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1 class="page-title">Consultation des Statistiques</h1>
+            <div class="action-buttons">
+                <button class="export-btn">Exporter</button>
+                <button class="edit-btn">Éditer</button>
+            </div>
+        </div>
+
+        <!-- Cartes de statistiques -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">128</div>
+                <div class="stat-label">Rapports déposés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">96</div>
+                <div class="stat-label">Rapports validés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Rapports refusés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">70</div>
+                <div class="stat-label">Soutenances planifiées</div>
+            </div>
+        </div>
+
+        <!-- Section des graphiques -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3 class="chart-title">Répartition des statuts de rapport</h3>
+                <canvas id="pieChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3 class="chart-title">Nombre de soutenances par mois</h3>
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Tableau des soutenances -->
+        <div class="table-section">
+            <div class="table-header">Liste des soutenances</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Étudiant</th>
+                        <th>Sujet</th>
+                        <th>Statut</th>
+                        <th>Note</th>
+                        <th>Spécialité</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dupont Marie</td>
+                        <td>Intelligence Artificielle en Médecine</td>
+                        <td><span class="status-badge status-validé">Validé</span></td>
+                        <td><span class="note-badge note-excellent">18/20</span></td>
+                        <td>Informatique</td>
+                        <td>15/03/2024</td>
+                    </tr>
+                    <tr>
+                        <td>Martin Pierre</td>
+                        <td>Développement d'une Application Mobile</td>
+                        <td><span class="status-badge status-en-cours">En cours</span></td>
+                        <td><span class="note-badge note-bien">15/20</span></td>
+                        <td>Informatique</td>
+                        <td>20/03/2024</td>
+                    </tr>
+                    <tr>
+                        <td>Bernard Sophie</td>
+                        <td>Analyse des Données Financières</td>
+                        <td><span class="status-badge status-validé">Validé</span></td>
+                        <td><span class="note-badge note-bien">16/20</span></td>
+                        <td>Finance</td>
+                        <td>25/03/2024</td>
+                    </tr>
+                    <tr>
+                        <td>Petit Lucas</td>
+                        <td>Système de Gestion de Base de Données</td>
+                        <td><span class="status-badge status-refusé">Refusé</span></td>
+                        <td><span class="note-badge note-passable">12/20</span></td>
+                        <td>Informatique</td>
+                        <td>10/03/2024</td>
+                    </tr>
+                    <tr>
+                        <td>Moreau Julie</td>
+                        <td>Marketing Digital et E-commerce</td>
+                        <td><span class="status-badge status-validé">Validé</span></td>
+                        <td><span class="note-badge note-excellent">17/20</span></td>
+                        <td>Marketing</td>
+                        <td>05/04/2024</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+<script src="../js/statistique.js"></script>
+</body>
+</html> 

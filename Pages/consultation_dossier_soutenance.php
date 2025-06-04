@@ -71,6 +71,6 @@
         </div>
     </main>
 
-    <script src="js/consultation_dossiers_soutenance.js"></script>
+    <script src="../js/consultation_dossiers_soutenance.js"></script>
 </body>
 </html>

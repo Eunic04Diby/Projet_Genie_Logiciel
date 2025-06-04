@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise à Jour du Personnel Administratif</title>
+    <style>
+        :root {
+            --primary-green: #4CAF50;
+            --hover-green: #45a049;
+            --danger-red: #e74c3c;
+            --background-white: #ffffff;
+            --text-dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            background: var(--background-white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-weight: 700;
+            color: var(--primary-green);
+            font-size: 1.8rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-bar input {
+            padding: 0.8rem 1.5rem;
+            width: 300px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .search-btn {
+            background: var(--primary-green);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: var(--hover-green);
+        }
+
+        .user-profile {
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            bottom: 0;
+            width: 250px;
+            background: var(--background-white);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            padding: 2rem 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            padding: 1.2rem 2rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .sidebar .active {
+            background: var(--primary-green);
+            color: white !important;
+            border-radius: 0 30px 30px 0;
+        }
+
+        .sidebar li:hover:not(.active) {
+            background: #f8f9fa;
+            color: var(--primary-green);
+        }
+
+        main {
+            margin: 90px 0 0 250px;
+            padding: 2rem;
+            min-height: calc(100vh - 90px);
+        }
+
+        .page-title {
+            color: var(--primary-green);
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-container {
+            background: var(--background-white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-row.single {
+            grid-template-columns: 1fr;
+        }
+
+        .form-row.four-columns {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #7f8c8d;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            outline: none;
+            background: white;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 1rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 3rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-top: 0.8rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-green);
+        }
+
+        .radio-option label {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-green), var(--hover-green));
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, var(--hover-green), #3d8b40);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+            display: none;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .table-container {
+            background: var(--background-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-top: 2rem;
+        }
+
+        .table-header {
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+
+        .personnel-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .personnel-table th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .personnel-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            color: #7f8c8d;
+        }
+
+        .personnel-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .action-btn {
+            background: var(--primary-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--hover-green);
+        }
+
+        .action-btn.delete {
+            background: var(--danger-red);
+        }
+
+        .action-btn.delete:hover {
+            background: #c0392b;
+        }
+
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar li span {
+                display: none;
+            }
+            
+            main {
+                margin-left: 80px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .form-row.four-columns {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            
+            main {
+                margin-left: 60px;
+                padding: 1rem;
+            }
+            
+            .search-bar input {
+                width: 150px;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .form-row.four-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">LOGO</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Rechercher...">
+            <button class="search-btn">RECHERCHER</button>
+        </div>
+        <div class="user-profile">NOM UTILISATEUR</div>
+    </header>
+
+    <nav class="sidebar">
+        <ul>
+            <li class="active">
+                <span>📋</span>
+                <span>MENU</span>
+            </li>
+            <li>
+                <span>👥</span>
+                <span>Personnel</span>
+            </li>
+            <li>
+                <span>📊</span>
+                <span>Rapports</span>
+            </li>
+            <li>
+                <span>⚙️</span>
+                <span>Paramètres</span>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1 class="page-title">Mise à Jour du Personnel Administratif</h1>
+
+        <div class="success-message" id="successMessage">
+            Personnel mis à jour avec succès !
+        </div>
+
+        <div class="form-container">
+            <form id="personnelForm">
+                <!-- Section Information générale/admin -->
+                <div class="section-title">Information générale/admin</div>
+                
+                <div class="form-row four-columns">
+                    <div class="form-group">
+                        <label for="matricule1">Matricule :</label>
+                        <input type="text" id="matricule1" name="matricule1" placeholder="E(X)">
+                    </div>
+                    <div class="form-group">
+                        <label for="matricule2">Matricule :</label>
+                        <input type="text" id="matricule2" name="matricule2" placeholder="E(X)">
+                    </div>
+                    <div class="form-group">
+                        <label for="matricule3">Matricule :</label>
+                        <input type="text" id="matricule3" name="matricule3" placeholder="E(X)">
+                    </div>
+                    <div class="form-group">
+                        <label for="matricule4">Matricule :</label>
+                        <input type="text" id="matricule4" name="matricule4" placeholder="E(X)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Genre :</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="masculin" name="genre" value="M">
+                            <label for="masculin">M</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="feminin" name="genre" value="F">
+                            <label for="feminin">F</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="neutre" name="genre" value="N">
+                            <label for="neutre">N</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Carrière -->
+                <div class="section-title" style="margin-top: 3rem;">Carrière</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="poste">Poste Occupé :</label>
+                        <input type="text" id="poste" name="poste" placeholder="E(X)">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date :</label>
+                        <input type="date" id="date" name="date">
+                    </div>
+                </div>
+
+                <div class="form-row single">
+                    <div class="form-group">
+                        <label for="dateEmbauche">Date d'Embauche :</label>
+                        <input type="date" id="dateEmbauche" name="dateEmbauche">
+                    </div>
+                </div>
+
+                <!-- Section Contact -->
+                <div class="section-title" style="margin-top: 3rem;">Contact</div>
+                
+                <div class="form-row single">
+                    <div class="form-group">
+                        <label for="telephone">Numéro Téléphone :</label>
+                        <input type="tel" id="telephone" name="telephone" placeholder="E(X)">
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="submit-btn">Valider</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Section Liste du personnel -->
+        <div class="table-container">
+            <div class="table-header">Liste du personnel</div>
+            <table class="personnel-table">
+                <thead>
+                    <tr>
+                        <th>Matricule</th>
+                        <th>Nom</th>
+                        <th>Prénoms</th>
+                        <th>Poste Occupé</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>EMP001</td>
+                        <td>DUPONT</td>
+                        <td>Jean-Pierre</td>
+                        <td>Administrateur</td>
+                        <td>
+                            <button class="action-btn">Modifier</button>
+                            <button class="action-btn delete">Supprimer</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>EMP002</td>
+                        <td>MARTIN</td>
+                        <td>Marie-Claire</td>
+                        <td>Secrétaire</td>
+                        <td>
+                            <button class="action-btn">Modifier</button>
+                            <button class="action-btn delete">Supprimer</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>EMP003</td>
+                        <td>BERNARD</td>
+                        <td>Paul</td>
+                        <td>Comptable</td>
+                        <td>
+                            <button class="action-btn">Modifier</button>
+                            <button class="action-btn delete">Supprimer</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('personnelForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simuler la soumission du formulaire
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            
+            // Cacher le message après 3 secondes
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+            
+            // Réinitialiser le formulaire
+            this.reset();
+        });
+
+        // Gestion des clics sur les boutons d'action
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.classList.contains('delete')) {
+                    if (confirm('Êtes-vous sûr de vouloir supprimer ce personnel ?')) {
+                        this.closest('tr').remove();
+                    }
+                } else {
+                    alert('Fonction de modification à implémenter');
+                }
+            });
+        });
+
+        // Gestion des éléments de la sidebar
+        document.querySelectorAll('.sidebar li').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
