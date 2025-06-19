@@ -5,13 +5,10 @@ $password = "";
 
 try {
   $pdo = new PDO("mysql:host=$servername;dbname=bdcov", $username, $password);
-  // Activer le mode exception
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  
-  // Connexion réussie
-  echo "Connexion réussie";
-  
+  // Pas d'affichage ici
 } catch(PDOException $e) {
-  echo "Échec de la connexion : " . $e->getMessage();
+  // Affiche une erreur propre si besoin, ou log dans un fichier
+  die("Erreur de connexion à la base de données.");
 }
 ?>
