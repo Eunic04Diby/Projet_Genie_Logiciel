@@ -4,21 +4,22 @@ include('../config/connexion_BD.php');
 $success_message = '';
 $error_message = '';
 $mode_edition = false;
-$entreprise_a_modifier = null;
+$type_utilisateur_a_modifier = null;
 
 // Traitement des actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
-    
+    $id_gu = $_POST['id_gu'] ?? null;
+
     switch ($action) {
         case 'ajouter':
             $id_tu = $_POST['identifiant'] ?? '';
             $lib_tu = $_POST['libelle'] ?? '';
 
-            if (!empty($id_tu) && !empty($lib_tu)) {
+            if (!empty($id_tu) && !empty($lib_tu) && !empty($id_gu)) {
                 try {
-                    $stmt = $pdo->prepare("INSERT INTO type_utilisateur (id_tu, lib_tu) VALUES (?, ?)");
-                    $stmt->execute([$id_tu, $lib_tu]);
+                    $stmt = $pdo->prepare("INSERT INTO type_utilisateur (id_tu, lib_tu, id_gu) VALUES (?, ?, ?)");
+                    $stmt->execute([$id_tu, $lib_tu, $id_gu]);
                     $success_message = "Type utilisateur ajouté avec succès !";
                 } catch (PDOException $e) {
                     $error_message = "Erreur lors de l'ajout : " . $e->getMessage();
@@ -33,10 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nouveau_id = $_POST['identifiant'] ?? '';
             $nouveau_libelle = $_POST['libelle'] ?? '';
 
-            if (!empty($id_original) && !empty($nouveau_id) && !empty($nouveau_libelle)) {
+            if (!empty($id_original) && !empty($nouveau_id) && !empty($nouveau_libelle) && !empty($id_gu)) {
                 try {
-                    $stmt = $pdo->prepare("UPDATE type_utilisateur SET id_tu = ?, lib_tu = ? WHERE id_tu = ?");
-                    $stmt->execute([$nouveau_id, $nouveau_libelle, $id_original]);
+                    $stmt = $pdo->prepare("UPDATE type_utilisateur SET id_tu = ?, lib_tu = ?, id_gu = ? WHERE id_tu = ?");
+                    $stmt->execute([$nouveau_id, $nouveau_libelle, $id_gu, $id_original]);
                     $success_message = "Type utilisateur modifié avec succès !";
                 } catch (PDOException $e) {
                     $error_message = "Erreur lors de la modification : " . $e->getMessage();
@@ -48,12 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 'supprimer':
             $id_tu = $_POST['id_tu'] ?? '';
-            
             if (!empty($id_tu)) {
                 try {
                     $stmt = $pdo->prepare("DELETE FROM type_utilisateur WHERE id_tu = ?");
                     $stmt->execute([$id_tu]);
-                    $success_message = "Traitement supprimé avec succès !";
+                    $success_message = "Type utilisateur supprimé avec succès !";
                 } catch (PDOException $e) {
                     $error_message = "Erreur lors de la suppression : " . $e->getMessage();
                 }
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Gestion du mode édition
+// Mode édition
 if (isset($_GET['modifier'])) {
     $id_a_modifier = $_GET['modifier'];
     try {
@@ -76,6 +76,15 @@ if (isset($_GET['modifier'])) {
         $error_message = "Erreur lors de la récupération des données : " . $e->getMessage();
     }
 }
+
+// Récupération des groupes utilisateurs pour le menu déroulant
+$groupes = [];
+try {
+    $stmt = $pdo->query("SELECT * FROM groupe_utilisateur");
+    $groupes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $error_message = "Erreur lors du chargement des groupes : " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -86,9 +95,8 @@ if (isset($_GET['modifier'])) {
     <title>Mise à jour des types utilisateurs</title>
         <link rel="stylesheet" href="../css/niveau_approbation.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <style>
-        .modal {
+<style>
+            .modal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -142,39 +150,9 @@ if (isset($_GET['modifier'])) {
             font-weight: bold;
             margin-bottom: 10px;
         }
-    </style>
+        </style>
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Rechercher...">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
-
-    <aside class="sidebar">
-        <ul>
-            <li class="active">
-                <span>📋</span>
-                <span>Fonctions</span>
-            </li>
-            <li>
-                <span>👥</span>
-                <span>Utilisateurs</span>
-            </li>
-            <li>
-                <span>⚙️</span>
-                <span>Paramètres</span>
-            </li>
-            <li>
-                <span>📊</span>
-                <span>Rapports</span>
-            </li>
-        </ul>
-    </aside>
-
-    <main>
         <h1 class="page-title">Mise à jour des types utilisateurs</h1>
 
         <?php if (!empty($success_message)) : ?>
@@ -192,7 +170,7 @@ if (isset($_GET['modifier'])) {
             <div class="edit-mode-title">Mode modification - Type utilisateur: <?= htmlspecialchars($type_utilisateur_a_modifier['lib_tu']) ?></div>
         <?php endif; ?>
         
-        <form method="POST" class="form-row">
+        <form method="POST" class="form-row" action="MAJ_Type_Utilisateur.php">
             <?php if ($mode_edition) : ?>
                 <input type="hidden" name="action" value="modifier">
                 <input type="hidden" name="id_original" value="<?= htmlspecialchars($type_utilisateur_a_modifier['id_tu']) ?>">
@@ -218,6 +196,20 @@ if (isset($_GET['modifier'])) {
                        value="<?= $mode_edition ? htmlspecialchars($type_utilisateur_a_modifier['lib_tu']) : '' ?>"
                        required>
             </div>
+
+        <div class="form-group">
+            <label for="id_gu">Groupe utilisateur</label>
+            <select id="id_gu" name="id_gu" required>
+                <option value="">-- Choisir un groupe --</option>
+                <?php foreach ($groupes as $groupe): ?>
+                    <option value="<?= $groupe['id_gu'] ?>"
+                        <?= ($mode_edition && $type_utilisateur_a_modifier['id_gu'] == $groupe['id_gu']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($groupe['lib_gu']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
             <button class="btn-add" type="submit">
                 <?= $mode_edition ? 'Modifier' : 'Ajouter' ?>
             </button>
@@ -234,16 +226,19 @@ if (isset($_GET['modifier'])) {
         <table class="data-table">
             <thead>
                 <tr>
-                    <th class="numero-col">N°</th>
                     <th>Identifiant</th>
                     <th>Libellé</th>
+                    <th>Groupe utilisateur</th>
                     <th class="action-col">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 try {
-                    $stmt = $pdo->query("SELECT * FROM type_utilisateur");
+                    $stmt = $pdo->query("SELECT tu.*, gu.lib_gu 
+                     FROM type_utilisateur tu 
+                     JOIN groupe_utilisateur gu ON tu.id_gu = gu.id_gu");
+
                     $rows = $stmt->fetchAll();
                     if (count($rows) === 0) {
                         echo "<tr><td colspan='4' class='empty-state'>Aucun type utilisateur enregistré.</td></tr>";
@@ -254,9 +249,10 @@ if (isset($_GET['modifier'])) {
                             $row_class = ($mode_edition && $row['id_tu'] === $type_utilisateur_a_modifier['id_tu']) ? 'style="background-color: #e7f3ff;"' : '';
                             
                             echo "<tr {$row_class}>
-                                    <td class='numero-col'>{$numero}</td>
+                                    
                                     <td>" . htmlspecialchars($row['id_tu']) . "</td>
                                     <td>" . htmlspecialchars($row['lib_tu']) . "</td>
+                                    <td>" . htmlspecialchars($row['lib_gu']) . "</td>
                                     <td class='action-col'>
                                         <div class='action-buttons'>
                                             <a href='MAJ_Type_Utilisateur.php?modifier={$id_encoded}' class='btn-edit'>Modifier</a>
@@ -274,7 +270,7 @@ if (isset($_GET['modifier'])) {
             </tbody>
         </table>
     </div>
-    </main>
+
 
     <div id="modalSuppression" class="modal">
     <div class="modal-content">

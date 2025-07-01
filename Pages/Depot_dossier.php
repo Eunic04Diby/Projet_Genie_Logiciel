@@ -9,24 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="RECHERCHER">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
-
-    <nav class="sidebar">
-        <ul>
-            <li class="active"><i class="fas fa-upload"></i> Dépôt</li>
-            <li><i class="fas fa-file-alt"></i> Dossiers</li>
-            <li><i class="fas fa-calendar-alt"></i> Calendrier</li>
-            <li><i class="fas fa-envelope"></i> Notifications</li>
-        </ul>
-    </nav>
-
-    <main>
         <h1 class="page-title">DÉPÔT DES DOSSIERS</h1>
 
         <form class="depot-form">
@@ -73,7 +55,6 @@
                 <i class="fas fa-paper-plane"></i> SOUMETTRE
             </button>
         </form>
-    </main>
 
     <script src="js/depot_dossiers.js"></script>
 </body>

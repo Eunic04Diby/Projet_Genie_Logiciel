@@ -143,24 +143,7 @@ if (isset($_GET['modifier'])) {
     </style>
 </head>
 <body>
-<header>
-    <div class="logo">LOGO</div>
-    <div class="search-bar">
-        <input type="text" placeholder="Rechercher...">
-    </div>
-    <div class="user-profile">NOM UTILISATEUR</div>
-</header>
 
-<aside class="sidebar">
-    <ul>
-        <li class="active"><span>📋</span><span>Fonctions</span></li>
-        <li><span>👥</span><span>Utilisateurs</span></li>
-        <li><span>⚙️</span><span>Paramètres</span></li>
-        <li><span>📊</span><span>Rapports</span></li>
-    </ul>
-</aside>
-
-<main>
     <h1 class="page-title">Mise à jour des entreprises</h1>
 
     <?php if (!empty($success_message)) : ?>
@@ -178,7 +161,7 @@ if (isset($_GET['modifier'])) {
             <div class="edit-mode-title">Mode modification - Entreprise: <?= htmlspecialchars($entreprise_a_modifier['lib_entr']) ?></div>
         <?php endif; ?>
         
-        <form method="POST" class="form-row">
+        <form method="POST" class="form-row" action="MAJ_Entreprise.php">
             <?php if ($mode_edition) : ?>
                 <input type="hidden" name="action" value="modifier">
                 <input type="hidden" name="id_original" value="<?= htmlspecialchars($entreprise_a_modifier['id_entr']) ?>">
@@ -260,7 +243,6 @@ if (isset($_GET['modifier'])) {
             </tbody>
         </table>
     </div>
-</main>
 
 <!-- Modal de confirmation de suppression -->
 <div id="modalSuppression" class="modal">

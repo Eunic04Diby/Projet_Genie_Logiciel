@@ -10,21 +10,6 @@
 </head>
 <body>
 
-  <header>
-    <div class="logo">LOGO</div>
-    <div class="search-bar">
-      <input type="text" placeholder="RECHERCHER" />
-    </div>
-    <div class="user-profile">NOM UTILISATEUR</div>
-  </header>
-
-  <nav class="sidebar">
-    <ul>
-      <li class="active"> Téléchargements</li>
-    </ul>
-  </nav>
-
-  <div class="main">
     <div class="card">
       <h2>TÉLÉCHARGER DES DOCUMENTS</h2>
       <div class="form-section">
@@ -81,7 +66,7 @@
         </tbody>
       </table>
     </div>
-  </div>
+
 
 </body>
 </html>

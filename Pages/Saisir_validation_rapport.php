@@ -9,15 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="RECHERCHER">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
-
-    <main>
         <div class="header-section">
             <!--<h1>SAISIR ET VALIDATION DES RAPPORTS</h1>-->
             <h2>VALIDATION DES RAPPORTS</h2>
@@ -56,7 +47,6 @@
                 </button>
             </div>
         </form>
-    </main>
 
     <script src="js/saisir_validation_rapport.js"></script>
 </body>

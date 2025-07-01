@@ -145,36 +145,7 @@ if (isset($_GET['modifier'])) {
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Rechercher...">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
 
-    <aside class="sidebar">
-        <ul>
-            <li class="active">
-                <span>📋</span>
-                <span>Fonctions</span>
-            </li>
-            <li>
-                <span>👥</span>
-                <span>Utilisateurs</span>
-            </li>
-            <li>
-                <span>⚙️</span>
-                <span>Paramètres</span>
-            </li>
-            <li>
-                <span>📊</span>
-                <span>Rapports</span>
-            </li>
-        </ul>
-    </aside>
-
-    <main>
         <h1 class="page-title">Mise à jour des statut du jury</h1>
 
         <?php if (!empty($success_message)) : ?>
@@ -274,7 +245,6 @@ if (isset($_GET['modifier'])) {
             </tbody>
         </table>
     </div>
-    </main>
 
     
     <div id="modalSuppression" class="modal">

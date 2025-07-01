@@ -137,3 +137,105 @@
                 row.style.transform = 'translateY(0)';
             }, 100);
         }
+
+        let numEtudiantASupprimer = '';
+
+        function confirmerSuppression(numEtud, nom) {
+            numEtudiantASupprimer = numEtud;
+            document.getElementById('nomEtudiant').textContent = nom;
+            document.getElementById('modalSuppression').style.display = 'block';
+        }
+
+        function supprimerEtudiant() {
+            document.getElementById('numEtudiantSupprimer').value = numEtudiantASupprimer;
+            document.getElementById('formSuppression').submit();
+        }
+
+        function fermerModal() {
+            document.getElementById('modalSuppression').style.display = 'none';
+        }
+
+        // Fermer la modal en cliquant à l'extérieur
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalSuppression');
+            if (event.target === modal) {
+                fermerModal();
+            }
+        }
+
+        //js etudiant
+        document.addEventListener('DOMContentLoaded', function () {
+    // Pour gérer l'ajout ou la modification sans recharger
+    const form = document.getElementById('#studentForm');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            fetch('Etudiant.php', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            })
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('main-content').innerHTML = html;
+                history.pushState(null, '', '?page=Etudiant.php'); // pour garder l’URL cohérente
+            });
+        });
+    }
+
+    // Pour supprimer sans recharger
+    document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            const nom = btn.dataset.nom;
+            if (confirm(`Confirmer la suppression de ${nom} ?`)) {
+                const formData = new FormData();
+                formData.append('action', 'supprimer');
+                formData.append('num_etud', id);
+
+                fetch('Etudiant.php', {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('main-content').innerHTML = html;
+                    history.pushState(null, '', '?page=Etudiant.php');
+                });
+            }
+        });
+    });
+
+
+    function initEvents() {
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const nom = btn.dataset.nom;
+                const id = btn.dataset.id;
+                if (confirm(`Confirmer suppression de ${nom} ?`)) {
+                    const form = new FormData();
+                    form.append('action', 'supprimer');
+                    form.append('num_etud', id);
+                    fetch('etudiant_content.php', {
+                        method: 'POST',
+                        body: form
+                    })
+                    .then(res => res.text())
+                    .then(html => {
+                        document.getElementById('main-content').innerHTML = html;
+                        initEvents();
+                    });
+                }
+            });
+        });
+    }
+});
+
+    

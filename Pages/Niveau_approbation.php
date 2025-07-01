@@ -12,14 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     switch ($action) {
         case 'ajouter':
-            $id_grade = $_POST['identifiant'] ?? '';
-            $nom_grade = $_POST['libelle'] ?? '';
+            $id_approb = $_POST['identifiant'] ?? '';
+            $lib_approb = $_POST['libelle'] ?? '';
 
-            if (!empty($id_grade) && !empty($nom_grade)) {
+            if (!empty($id_approb) && !empty($lib_approb)) {
                 try {
-                    $stmt = $pdo->prepare("INSERT INTO grade (id_grade, nom_grade) VALUES (?, ?)");
-                    $stmt->execute([$id_grade, $nom_grade]);
-                    $success_message = "Entreprise ajoutée avec succès !";
+                    $stmt = $pdo->prepare("INSERT INTO niveau_approbation (id_approb, lib_approb) VALUES (?, ?)");
+                    $stmt->execute([$id_approb, $lib_approb]);
+                    $success_message = "Type utilisateur ajouté avec succès !";
                 } catch (PDOException $e) {
                     $error_message = "Erreur lors de l'ajout : " . $e->getMessage();
                 }
@@ -35,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (!empty($id_original) && !empty($nouveau_id) && !empty($nouveau_libelle)) {
                 try {
-                    $stmt = $pdo->prepare("UPDATE grade SET id_grade = ?, nom_grade = ? WHERE id_grade = ?");
+                    $stmt = $pdo->prepare("UPDATE niveau_approbation SET id_approb = ?, lib_approb = ? WHERE id_approb = ?");
                     $stmt->execute([$nouveau_id, $nouveau_libelle, $id_original]);
-                    $success_message = "Grade modifié avec succès !";
+                    $success_message = "Niveau d'approbation modifié avec succès !";
                 } catch (PDOException $e) {
                     $error_message = "Erreur lors de la modification : " . $e->getMessage();
                 }
@@ -47,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
 
         case 'supprimer':
-            $id_grade = $_POST['id_grade'] ?? '';
+            $id_approb = $_POST['id_approb'] ?? '';
             
-            if (!empty($id_grade)) {
+            if (!empty($id_approb)) {
                 try {
-                    $stmt = $pdo->prepare("DELETE FROM grade WHERE id_grade = ?");
-                    $stmt->execute([$id_grade]);
-                    $success_message = "Grade supprimée avec succès !";
+                    $stmt = $pdo->prepare("DELETE FROM niveau_approbation WHERE id_approb = ?");
+                    $stmt->execute([$id_approb]);
+                    $success_message = "Niveau d'approbation supprimé avec succès !";
                 } catch (PDOException $e) {
                     $error_message = "Erreur lors de la suppression : " . $e->getMessage();
                 }
@@ -66,10 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_GET['modifier'])) {
     $id_a_modifier = $_GET['modifier'];
     try {
-        $stmt = $pdo->prepare("SELECT * FROM grade WHERE id_grade = ?");
+        $stmt = $pdo->prepare("SELECT * FROM niveau_approbation WHERE id_approb = ?");
         $stmt->execute([$id_a_modifier]);
-        $grade_a_modifier = $stmt->fetch();
-        if ($grade_a_modifier) {
+        $niveau_approbation_a_modifier = $stmt->fetch();
+        if ($niveau_approbation_a_modifier) {
             $mode_edition = true;
         }
     } catch (PDOException $e) {
@@ -78,18 +78,17 @@ if (isset($_GET['modifier'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mise à jour des grades</title>
+    <title>Mise à jour des niveaux d'approbation</title>
         <link rel="stylesheet" href="../css/niveau_approbation.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        .modal {
+            .modal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -143,12 +142,14 @@ if (isset($_GET['modifier'])) {
             font-weight: bold;
             margin-bottom: 10px;
         }
-    </style>
+        </style>
+</head>
 </head>
 <body>
-    <h1 class="page-title">Mise à jour des grades</h1>
 
-    <?php if (!empty($success_message)) : ?>
+        <h1 class="page-title">Mise à jour des niveaux d'approbation</h1>
+
+        <?php if (!empty($success_message)) : ?>
         <div class="success-message" style="display: block;">
             ✅ <?= htmlspecialchars($success_message) ?>
         </div>
@@ -160,13 +161,13 @@ if (isset($_GET['modifier'])) {
 
     <div class="form-container <?= $mode_edition ? 'form-edit-mode' : '' ?>">
         <?php if ($mode_edition) : ?>
-            <div class="edit-mode-title">Mode modification - Grade: <?= htmlspecialchars($grade_a_modifier['nom_grade']) ?></div>
+            <div class="edit-mode-title">Mode modification - Niveau d'approbation: <?= htmlspecialchars($niveau_approbation_a_modifier['lib_approb']) ?></div>
         <?php endif; ?>
         
-        <form method="POST" class="form-row" action="MAJ_Grades.php">
+        <form method="POST" class="form-row" action="Niveau_approbation.php">
             <?php if ($mode_edition) : ?>
                 <input type="hidden" name="action" value="modifier">
-                <input type="hidden" name="id_original" value="<?= htmlspecialchars($grade_a_modifier['id_grade']) ?>">
+                <input type="hidden" name="id_original" value="<?= htmlspecialchars($niveau_approbation_a_modifier['id_approb']) ?>">
             <?php else : ?>
                 <input type="hidden" name="action" value="ajouter">
             <?php endif; ?>
@@ -177,7 +178,7 @@ if (isset($_GET['modifier'])) {
                        id="identifiant" 
                        name="identifiant" 
                        placeholder="Saisir l'identifiant" 
-                       value="<?= $mode_edition ? htmlspecialchars($grade_a_modifier['id_grade']) : '' ?>"
+                       value="<?= $mode_edition ? htmlspecialchars($niveau_approbation_a_modifier['id_approb']) : '' ?>"
                        required>
             </div>
             <div class="form-group">
@@ -186,14 +187,14 @@ if (isset($_GET['modifier'])) {
                        id="libelle" 
                        name="libelle" 
                        placeholder="Saisir le libellé" 
-                       value="<?= $mode_edition ? htmlspecialchars($grade_a_modifier['nom_grade']) : '' ?>"
+                       value="<?= $mode_edition ? htmlspecialchars($niveau_approbation_a_modifier['lib_approb']) : '' ?>"
                        required>
             </div>
             <button class="btn-add" type="submit">
                 <?= $mode_edition ? 'Modifier' : 'Ajouter' ?>
             </button>
             <?php if ($mode_edition) : ?>
-                <a href="MAJ_Grades.php" class="btn-cancel" style="margin-left: 10px; padding: 10px 15px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px;">
+                <a href="Niveau_approbation.php" class="btn-cancel" style="margin-left: 10px; padding: 10px 15px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px;">
                     Annuler
                 </a>
             <?php endif; ?>
@@ -201,7 +202,7 @@ if (isset($_GET['modifier'])) {
     </div>
 
     <div class="table-container">
-        <div class="table-header">Liste des grades</div>
+        <div class="table-header">Liste des status</div>
         <table class="data-table">
             <thead>
                 <tr>
@@ -214,24 +215,24 @@ if (isset($_GET['modifier'])) {
             <tbody>
                 <?php
                 try {
-                    $stmt = $pdo->query("SELECT * FROM grade");
+                    $stmt = $pdo->query("SELECT * FROM niveau_approbation");
                     $rows = $stmt->fetchAll();
                     if (count($rows) === 0) {
-                        echo "<tr><td colspan='4' class='empty-state'>Aucun grade enregistré.</td></tr>";
+                        echo "<tr><td colspan='4' class='empty-state'>Aucun Niveau enregistré.</td></tr>";
                     } else {
                         $numero = 1;
                         foreach ($rows as $row) {
-                            $id_encoded = urlencode($row['id_grade']);
-                            $row_class = ($mode_edition && $row['id_grade'] === $grade_a_modifier['id_grade']) ? 'style="background-color: #e7f3ff;"' : '';
+                            $id_encoded = urlencode($row['id_approb']);
+                            $row_class = ($mode_edition && $row['id_approb'] === $niveau_approbation_a_modifier['id_approb']) ? 'style="background-color: #e7f3ff;"' : '';
                             
                             echo "<tr {$row_class}>
                                     <td class='numero-col'>{$numero}</td>
-                                    <td>" . htmlspecialchars($row['id_grade']) . "</td>
-                                    <td>" . htmlspecialchars($row['nom_grade']) . "</td>
+                                    <td>" . htmlspecialchars($row['id_approb']) . "</td>
+                                    <td>" . htmlspecialchars($row['lib_approb']) . "</td>
                                     <td class='action-col'>
                                         <div class='action-buttons'>
-                                            <a href='MAJ_Grades.php?modifier={$id_encoded}' class='btn-edit'>Modifier</a>
-                                            <button type='button' class='btn-delete' onclick='confirmerSuppression(\"{$id_encoded}\", \"" . htmlspecialchars($row['nom_grade']) . "\")'>Supprimer</button>
+                                            <a href='Niveau_approbation.php?modifier={$id_encoded}' class='btn-edit'>Modifier</a>
+                                            <button type='button' class='btn-delete' onclick='confirmerSuppression(\"{$id_encoded}\", \"" . htmlspecialchars($row['lib_approb']) . "\")'>Supprimer</button>
                                         </div>
                                     </td>
                                   </tr>";
@@ -246,13 +247,12 @@ if (isset($_GET['modifier'])) {
         </table>
     </div>
 
-    <!-- Modal de confirmation de suppression -->
-<div id="modalSuppression" class="modal">
+     <div id="modalSuppression" class="modal">
     <div class="modal-content">
         <h3>Confirmer la suppression</h3>
-        <p>Êtes-vous sûr de vouloir supprimer le grade "<span id="nomGrade"></span>" ?</p>
+        <p>Êtes-vous sûr de vouloir supprimer le traitement "<span id="nomApprob"></span>" ?</p>
         <div class="modal-buttons">
-            <button type="button" class="btn-confirm" onclick="supprimerGrade()">Oui, supprimer</button>
+            <button type="button" class="btn-confirm" onclick="supprimerApprob()">Oui, supprimer</button>
             <button type="button" class="btn-cancel" onclick="fermerModal()">Annuler</button>
         </div>
     </div>
@@ -261,20 +261,20 @@ if (isset($_GET['modifier'])) {
 <!-- Formulaire caché pour la suppression -->
 <form id="formSuppression" method="POST" style="display: none;">
     <input type="hidden" name="action" value="supprimer">
-    <input type="hidden" name="id_grade" id="idGradeSupprimer">
+    <input type="hidden" name="id_approb" id="idApprobSupprimer">
 </form>
 
 <script>
-let idGradeASupprimer = '';
+let idApprobASupprimer = '';
 
 function confirmerSuppression(id, nom) {
-    idGradeASupprimer = id;
-    document.getElementById('nomGrade').textContent = nom;
+    idApprobASupprimer = id;
+    document.getElementById('nomApprob').textContent = nom;
     document.getElementById('modalSuppression').style.display = 'block';
 }
 
-function supprimerGrade() {
-    document.getElementById('idGradeSupprimer').value = idGradeASupprimer;
+function supprimerApprob() {
+    document.getElementById('idApprobSupprimer').value = idApprobASupprimer;
     document.getElementById('formSuppression').submit();
 }
 

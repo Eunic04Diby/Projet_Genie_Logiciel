@@ -9,37 +9,6 @@
 
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Rechercher...">
-            <button class="search-btn">RECHERCHER</button>
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
-
-    <nav class="sidebar">
-        <ul>
-            <li class="active">
-                <span>📋</span>
-                <span>Réclamations</span>
-            </li>
-            <li>
-                <span>👥</span>
-                <span>Étudiants</span>
-            </li>
-            <li>
-                <span>📊</span>
-                <span>Rapports</span>
-            </li>
-            <li>
-                <span>⚙️</span>
-                <span>Paramètres</span>
-            </li>
-        </ul>
-    </nav>
-
-    <main>
         <h1 class="page-title">Fiche de Réclamation</h1>
 
         <div class="success-message" id="successMessage">
@@ -98,7 +67,6 @@
                 <button type="submit" class="submit-btn">Envoyer</button>
             </div>
         </form>
-    </main>
 
     <script src="../js/fiche_reclamation.js"></script>
 </body>

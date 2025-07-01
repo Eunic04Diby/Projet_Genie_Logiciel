@@ -9,25 +9,7 @@
 
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Rechercher...">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
-    
-    <div class="sidebar">
-        <ul>
-            <li class="active">Gestion des utilisateurs</li>
-            <li>Tableau de bord</li>
-            <li>Statistiques</li>
-            <li>Paramètres</li>
-            <li>Aide</li>
-        </ul>
-    </div>
-    
-    <div class="main">
+
         <div class="card">
             <h2>GESTION DES UTILISATEURS</h2>
             
@@ -126,6 +108,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
 </body>
 </html>

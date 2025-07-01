@@ -529,27 +529,7 @@ $fonctions = $fonctionManager->getAllFonctions();
     </style>
 </head>
 <body>
-<header>
-    <div class="logo">LOGO</div>
-    <div class="search-bar">
-        <label for="search" class="sr-only">Rechercher</label>
-        <input type="text" id="search" placeholder="Rechercher...">
-    </div>
-    <div class="user-profile">NOM UTILISATEUR</div>
-</header>
 
-<aside class="sidebar">
-    <nav>
-        <ul role="list">
-            <li class="active"><span aria-hidden="true">📋</span><span>Fonctions</span></li>
-            <li><span aria-hidden="true">👥</span><span>Utilisateurs</span></li>
-            <li><span aria-hidden="true">⚙️</span><span>Paramètres</span></li>
-            <li><span aria-hidden="true">📊</span><span>Rapports</span></li>
-        </ul>
-    </nav>
-</aside>
-
-<main>
     <h1 class="page-title">Mise à jour des fonctions</h1>
 
     <?php if (!empty($success_message)) : ?>
@@ -580,7 +560,7 @@ $fonctions = $fonctionManager->getAllFonctions();
             </div>
         <?php endif; ?>
 
-        <form method="POST" class="form-row" novalidate>
+        <form method="POST" class="form-row" action="MAJ_Fonction.php" novalidate>
             <input type="hidden" name="csrf_token" value="<?= escapeHtml($_SESSION['csrf_token']) ?>">
             
             <?php if ($mode_edition) : ?>
@@ -673,7 +653,6 @@ $fonctions = $fonctionManager->getAllFonctions();
             </tbody>
         </table>
     </div>
-</main>
 
 <!-- Modal de confirmation -->
 <div id="modalSuppression" class="modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">

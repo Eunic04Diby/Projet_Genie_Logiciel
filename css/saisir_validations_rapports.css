@@ -16,55 +16,7 @@ body {
     background: #f8f9fa;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: var(--background-white);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
 
-.logo {
-    font-weight: bold;
-    color: var(--primary-green);
-    font-size: 1.5rem;
-}
-
-.search-bar input {
-    padding: 0.8rem;
-    width: 300px;
-    border: 2px solid #ddd;
-    border-radius: 25px;
-    transition: all 0.3s;
-}
-
-.search-bar input:focus {
-    outline: none;
-    border-color: var(--primary-green);
-    box-shadow: 0 0 8px rgba(76,175,80,0.2);
-}
-
-.user-profile {
-    color: var(--text-dark);
-    font-weight: 500;
-}
-
-.header-section {
-    padding: 2rem;
-    text-align: center;
-}
-
-.header-section h1 {
-    color: var(--text-dark);
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-}
-
-.header-section h2 {
-    color: var(--primary-green);
-    font-size: 1.5rem;
-}
 
 .validation-form {
     background: var(--background-white);

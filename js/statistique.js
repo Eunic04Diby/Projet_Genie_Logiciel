@@ -1,108 +1,53 @@
-// Configuration du graphique en secteurs
-        const pieCtx = document.getElementById('pieChart').getContext('2d');
-        const pieChart = new Chart(pieCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Validés', 'En cours', 'Refusés'],
-                datasets: [{
-                    data: [96, 20, 12],
-                    backgroundColor: [
-                        '#4CAF50',
-                        '#f39c12',
-                        '#e74c3c'
-                    ],
-                    borderWidth: 0,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 20,
-                            font: {
-                                size: 12,
-                                weight: '600'
-                            }
-                        }
-                    }
-                }
+document.addEventListener("DOMContentLoaded", function () {
+    // Données fictives – à remplacer éventuellement par des données dynamiques JSON/PHP
+    const rapports = {
+        validés: 96,
+        déposés: 128,
+        refusés: 12
+    };
+
+    const soutenancesParMois = {
+        labels: ["Jan", "Fév", "Mars", "Avr", "Mai", "Juin"],
+        data: [5, 12, 25, 18, 10, 0]
+    };
+
+    // 🥧 Camembert - Statut des rapports
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Déposés', 'Validés', 'Refusés'],
+            datasets: [{
+                label: 'Rapports',
+                data: [rapports.déposés, rapports.validés, rapports.refusés],
+                backgroundColor: ['#3498db', '#2ecc71', '#e74c3c']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
             }
-        });
+        }
+    });
 
-        // Configuration du graphique en barres
-        const barCtx = document.getElementById('barChart').getContext('2d');
-        const barChart = new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
-                datasets: [{
-                    label: 'Soutenances',
-                    data: [8, 12, 15, 18, 10, 7],
-                    backgroundColor: '#4CAF50',
-                    borderRadius: 5,
-                    borderSkipped: false,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#f0f0f0'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
+    // 📊 Barres - Soutenances par mois
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: soutenancesParMois.labels,
+            datasets: [{
+                label: 'Soutenances',
+                data: soutenancesParMois.data,
+                backgroundColor: '#1abc9c'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
             }
-        });
-
-        // Animation des cartes statistiques
-        document.addEventListener('DOMContentLoaded', function() {
-            const statNumbers = document.querySelectorAll('.stat-number');
-            
-            statNumbers.forEach(stat => {
-                const finalValue = parseInt(stat.textContent);
-                let currentValue = 0;
-                const increment = finalValue / 50;
-                const timer = setInterval(() => {
-                    currentValue += increment;
-                    if (currentValue >= finalValue) {
-                        stat.textContent = finalValue;
-                        clearInterval(timer);
-                    } else {
-                        stat.textContent = Math.floor(currentValue);
-                    }
-                }, 30);
-            });
-        });
-
-        // Gestion du menu latéral
-        document.querySelectorAll('.sidebar li').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Fonctionnalité d'export
-        document.querySelector('.export-btn').addEventListener('click', function() {
-            alert('Fonctionnalité d\'export en cours de développement');
-        });
-
-        // Fonctionnalité d'édition
-        document.querySelector('.edit-btn').addEventListener('click', function() {
-            alert('Mode édition activé');
-        });
+        }
+    });
+});

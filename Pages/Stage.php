@@ -5,27 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Stages</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/stages.css">
+    <link rel="stylesheet" href="../css/stages.css">
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="RECHERCHER">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
 
-    <nav class="sidebar">
-        <ul>
-            <li class="active">STAGES</li>
-            <li>ÉTUDIANTS</li>
-            <li>ENTREPRISES</li>
-            <li>RAPPORTS</li>
-        </ul>
-    </nav>
-
-    <main>
         <section class="form-section">
             <h2>MISE À JOUR DES STAGES</h2>
             <form id="stageForm">
@@ -86,7 +69,6 @@
                 <!-- Données dynamiques -->
             </div>
         </section>
-    </main>
 
     <script src="stages.js"></script>
 </body>

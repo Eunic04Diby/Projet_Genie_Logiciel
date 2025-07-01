@@ -10,15 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="RECHERCHER">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
 
-    <main>
         <div class="header-info">
           
             <h1>LISTE DES DOSSIERS DE SOUTENANCE</h1>
@@ -47,7 +39,6 @@
                 </div>
             </div>
         </section>
-    </main>
 
     <script src="js/liste_dossiers_soutenance.js"></script>
 </body>

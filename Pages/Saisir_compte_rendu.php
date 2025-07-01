@@ -11,23 +11,6 @@
 </head>
 <body>
 
-     <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="RECHERCHER">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
-
-    <nav class="sidebar">
-        <ul>
-            <li class="active"> </li>
-            
-        </ul>
-    </nav>
-    
-
-    <div class="main">
 
         <div class="content">
             <h2>SAISIR DES COMPTE-RENDUS</h2>
@@ -81,7 +64,6 @@
                 <button>VALIDER</button>
             </div>
         </div>
-    </div>
 
 </body>
 </html>

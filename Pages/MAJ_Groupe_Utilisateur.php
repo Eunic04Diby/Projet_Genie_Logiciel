@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($id_gu)) {
                 try {
                     $stmt = $pdo->prepare("DELETE FROM groupe_utilisateur WHERE id_gu = ?");
-                    $stmt->execute([$id_grade]);
+                    $stmt->execute([$id_gu]);
                     $success_message = "Groupe utilisateur supprimé avec succès !";
                 } catch (PDOException $e) {
                     $error_message = "Erreur lors de la suppression : " . $e->getMessage();
@@ -146,36 +146,7 @@ if (isset($_GET['modifier'])) {
 
 </head>
 <body>
-    <header>
-        <div class="logo">LOGO</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Rechercher...">
-        </div>
-        <div class="user-profile">NOM UTILISATEUR</div>
-    </header>
 
-    <aside class="sidebar">
-        <ul>
-            <li class="active">
-                <span>📋</span>
-                <span>Fonctions</span>
-            </li>
-            <li>
-                <span>👥</span>
-                <span>Utilisateurs</span>
-            </li>
-            <li>
-                <span>⚙️</span>
-                <span>Paramètres</span>
-            </li>
-            <li>
-                <span>📊</span>
-                <span>Rapports</span>
-            </li>
-        </ul>
-    </aside>
-
-    <main>
         <h1 class="page-title">Mise à jour des groupes utilisateurs</h1>
 
         <?php if (!empty($success_message)) : ?>
@@ -276,14 +247,12 @@ if (isset($_GET['modifier'])) {
         </table>
     </div>
 
-    </main>
-
     <div id="modalSuppression" class="modal">
     <div class="modal-content">
         <h3>Confirmer la suppression</h3>
         <p>Êtes-vous sûr de vouloir supprimer le groupe "<span id="nomGu"></span>" ?</p>
         <div class="modal-buttons">
-            <button type="button" class="btn-confirm" onclick="supprimerGrade()">Oui, supprimer</button>
+            <button type="button" class="btn-confirm" onclick="supprimerGu()">Oui, supprimer</button>
             <button type="button" class="btn-cancel" onclick="fermerModal()">Annuler</button>
         </div>
     </div>
